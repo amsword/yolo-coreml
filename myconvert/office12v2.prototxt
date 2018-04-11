@@ -1,0 +1,546 @@
+name: "yolo-darknet19"
+input: "data"
+input_shape {
+  dim: 3
+  dim: 416
+  dim: 416
+}
+input_shape {
+  dim: 1
+  dim: 2
+}
+layer {
+  name: "dark1/conv"
+  type: "Convolution"
+  bottom: "data"
+  top: "dark1/conv"
+  convolution_param {
+    num_output: 32
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark1/leaky"
+  type: "ReLU"
+  bottom: "dark1/conv"
+  top: "dark1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "dark1/conv"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    pad: 0
+  }
+}
+layer {
+  name: "dark2/conv"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "dark2/conv"
+  convolution_param {
+    num_output: 64
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark2/leaky"
+  type: "ReLU"
+  bottom: "dark2/conv"
+  top: "dark2/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "dark2/conv"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    pad: 0
+  }
+}
+layer {
+  name: "dark3a/conv"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "dark3a/conv"
+  convolution_param {
+    num_output: 128
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark3a/leaky"
+  type: "ReLU"
+  bottom: "dark3a/conv"
+  top: "dark3a/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark3b_1/conv"
+  type: "Convolution"
+  bottom: "dark3a/conv"
+  top: "dark3b_1/conv"
+  convolution_param {
+    num_output: 64
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dark3b_1/leaky"
+  type: "ReLU"
+  bottom: "dark3b_1/conv"
+  top: "dark3b_1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark3c/conv"
+  type: "Convolution"
+  bottom: "dark3b_1/conv"
+  top: "dark3c/conv"
+  convolution_param {
+    num_output: 128
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark3c/leaky"
+  type: "ReLU"
+  bottom: "dark3c/conv"
+  top: "dark3c/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "dark3c/conv"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    pad: 0
+  }
+}
+layer {
+  name: "dark4a/conv"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "dark4a/conv"
+  convolution_param {
+    num_output: 256
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark4a/leaky"
+  type: "ReLU"
+  bottom: "dark4a/conv"
+  top: "dark4a/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark4b_1/conv"
+  type: "Convolution"
+  bottom: "dark4a/conv"
+  top: "dark4b_1/conv"
+  convolution_param {
+    num_output: 128
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dark4b_1/leaky"
+  type: "ReLU"
+  bottom: "dark4b_1/conv"
+  top: "dark4b_1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark4c/conv"
+  type: "Convolution"
+  bottom: "dark4b_1/conv"
+  top: "dark4c/conv"
+  convolution_param {
+    num_output: 256
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark4c/leaky"
+  type: "ReLU"
+  bottom: "dark4c/conv"
+  top: "dark4c/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom: "dark4c/conv"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    pad: 0
+  }
+}
+layer {
+  name: "dark5a/conv"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "dark5a/conv"
+  convolution_param {
+    num_output: 512
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark5a/leaky"
+  type: "ReLU"
+  bottom: "dark5a/conv"
+  top: "dark5a/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark5b_1/conv"
+  type: "Convolution"
+  bottom: "dark5a/conv"
+  top: "dark5b_1/conv"
+  convolution_param {
+    num_output: 256
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dark5b_1/leaky"
+  type: "ReLU"
+  bottom: "dark5b_1/conv"
+  top: "dark5b_1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark5c/conv"
+  type: "Convolution"
+  bottom: "dark5b_1/conv"
+  top: "dark5c/conv"
+  convolution_param {
+    num_output: 512
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark5c/leaky"
+  type: "ReLU"
+  bottom: "dark5c/conv"
+  top: "dark5c/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark5d_1/conv"
+  type: "Convolution"
+  bottom: "dark5c/conv"
+  top: "dark5d_1/conv"
+  convolution_param {
+    num_output: 256
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dark5d_1/leaky"
+  type: "ReLU"
+  bottom: "dark5d_1/conv"
+  top: "dark5d_1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark5e/conv"
+  type: "Convolution"
+  bottom: "dark5d_1/conv"
+  top: "dark5e/conv"
+  convolution_param {
+    num_output: 512
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark5e/leaky"
+  type: "ReLU"
+  bottom: "dark5e/conv"
+  top: "dark5e/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "pool5"
+  type: "Pooling"
+  bottom: "dark5e/conv"
+  top: "pool5"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    pad: 0
+  }
+}
+layer {
+  name: "dark6a/conv"
+  type: "Convolution"
+  bottom: "pool5"
+  top: "dark6a/conv"
+  convolution_param {
+    num_output: 1024
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark6a/leaky"
+  type: "ReLU"
+  bottom: "dark6a/conv"
+  top: "dark6a/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark6b_1/conv"
+  type: "Convolution"
+  bottom: "dark6a/conv"
+  top: "dark6b_1/conv"
+  convolution_param {
+    num_output: 512
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dark6b_1/leaky"
+  type: "ReLU"
+  bottom: "dark6b_1/conv"
+  top: "dark6b_1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark6c/conv"
+  type: "Convolution"
+  bottom: "dark6b_1/conv"
+  top: "dark6c/conv"
+  convolution_param {
+    num_output: 1024
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark6c/leaky"
+  type: "ReLU"
+  bottom: "dark6c/conv"
+  top: "dark6c/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark6d_1/conv"
+  type: "Convolution"
+  bottom: "dark6c/conv"
+  top: "dark6d_1/conv"
+  convolution_param {
+    num_output: 512
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "dark6d_1/leaky"
+  type: "ReLU"
+  bottom: "dark6d_1/conv"
+  top: "dark6d_1/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "dark6e/conv"
+  type: "Convolution"
+  bottom: "dark6d_1/conv"
+  top: "dark6e/conv"
+  convolution_param {
+    num_output: 1024
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "dark6e/leaky"
+  type: "ReLU"
+  bottom: "dark6e/conv"
+  top: "dark6e/conv"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "extra_conv19"
+  type: "Convolution"
+  bottom: "dark6e/conv"
+  top: "extra_conv19"
+  convolution_param {
+    num_output: 1024
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "extra_conv19/leaky"
+  type: "ReLU"
+  bottom: "extra_conv19"
+  top: "extra_conv19"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "extra_conv20"
+  type: "Convolution"
+  bottom: "extra_conv19"
+  top: "extra_conv20"
+  convolution_param {
+    num_output: 1024
+    bias_term: true
+    pad: 1
+    kernel_size: 3
+    group: 4
+    stride: 1
+  }
+}
+layer {
+  name: "extra_conv20/leaky"
+  type: "ReLU"
+  bottom: "extra_conv20"
+  top: "extra_conv20"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "extra_conv21"
+  type: "Convolution"
+  bottom: "extra_conv20"
+  top: "extra_conv21"
+  convolution_param {
+    num_output: 1024
+    bias_term: true
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}
+layer {
+  name: "extra_conv21/leaky"
+  type: "ReLU"
+  bottom: "extra_conv21"
+  top: "extra_conv21"
+  relu_param {
+    negative_slope: 0.1
+  }
+}
+layer {
+  name: "last_conv2"
+  type: "Convolution"
+  bottom: "extra_conv21"
+  top: "last_conv"
+  convolution_param {
+    num_output: 85
+    pad: 0
+    kernel_size: 1
+    stride: 1
+  }
+}

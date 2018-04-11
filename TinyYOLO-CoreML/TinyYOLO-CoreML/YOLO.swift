@@ -8,8 +8,8 @@ class YOLO {
   public static let maxBoundingBoxes = 10
 
   // Tweak these values to get more or fewer predictions.
-  let confidenceThreshold: Float = 0.3
-  let iouThreshold: Float = 0.5
+  let confidenceThreshold: Float = 0.6
+  let iouThreshold: Float = 0.3
 
   struct Prediction {
     let classIndex: Int
@@ -17,13 +17,17 @@ class YOLO {
     let rect: CGRect
   }
 
-  let model = TinyYOLO()
-
+  //let model = TinyYOLO()
+  let model = office12()
+    //let model=imgnet200()
   public init() { }
 
   public func predict(image: CVPixelBuffer) throws -> [Prediction] {
-    if let output = try? model.prediction(image: image) {
-      return computeBoundingBoxes(features: output.grid)
+    if let output = try? model.prediction( data : image) {
+        return computeBoundingBoxes(features: output.last_conv)
+
+    //if let output = try? model.prediction( image : image) {
+    //  return computeBoundingBoxes(features: output.grid)
     } else {
       return []
     }
@@ -38,7 +42,7 @@ class YOLO {
     let gridHeight = 13
     let gridWidth = 13
     let boxesPerCell = 5
-    let numClasses = 20
+    let numClasses = 12
 
     // The 416x416 image is divided into a 13x13 grid. Each of these grid cells
     // will predict 5 bounding boxes (boxesPerCell). A bounding box consists of
@@ -52,10 +56,11 @@ class YOLO {
     // NOTE: It turns out that accessing the elements in the multi-array as
     // `features[[channel, cy, cx] as [NSNumber]].floatValue` is kinda slow.
     // It's much faster to use direct memory access to the features.
+    let dimbase=2
     let featurePointer = UnsafeMutablePointer<Double>(OpaquePointer(features.dataPointer))
-    let channelStride = features.strides[0].intValue
-    let yStride = features.strides[1].intValue
-    let xStride = features.strides[2].intValue
+    let channelStride = features.strides[dimbase].intValue
+    let yStride = features.strides[dimbase+1].intValue
+    let xStride = features.strides[dimbase+2].intValue
 
     func offset(_ channel: Int, _ x: Int, _ y: Int) -> Int {
       return channel*channelStride + y*yStride + x*xStride
